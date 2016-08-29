@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Issue Viewer</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/angularjs/1.5.5/angular.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script type="text/javascript">
+      var app = angular.module('app', []);
+
+        app.controller('MsgCtrl', ['$scope', function($scope) {
+          $scope.project = {};
+          $scope.project.name = "Issue Viewer";
+          
+          $scope.users = [
+            {id:1, name:'Olive'},
+            {id:2, name:'Carine'},
+            {id:3, name:'Léna'}
+          ];
+
+          $scope.msgs = [
+            {text:'This looks close to #6456 and I thought it was just another case of that issue but @indutny mentioned that the errors are printed from others languages so #6456 alone shouldnt have caused this this is why I m opening a separate issue.', wordCount:43,authorId:1},
+            {text:'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?', wordCount:34, authorId:2},
+            {text:'That happens because of libc buffer size limit. In fact vfprintf returns -1.', wordCount:13, authorId:3}
+          ];
+
+        }]);
+    </script>
+</head>
+<body ng-app="app"> 
+
+    <div ng-controller="MsgCtrl" class="container">
+
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 text-center">
+                <h2>Contributors list</h2>
+                <ul class="list-group">
+                    <li ng-repeat="u in users" class="list-group-item">{{u.name}}</li>
+                </ul>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 text-center">
+                <h2>Messages</h2>
+                <ul class="list-group">
+                    <li ng-repeat="m in msgs" class="list-group-item">{{m.text}}</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
