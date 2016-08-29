@@ -13,7 +13,8 @@
     <!-- Bootstrap Core CSS -->
     <link href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/angularjs/1.5.5/angular.min.js"></script>
-
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">google.load('visualization', '1.0', {'packages':['corechart']});</script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -22,12 +23,62 @@
     <![endif]-->
     
     <script type="text/javascript">
+
       var app = angular.module('app', []);
 
-        app.controller('MsgCtrl', ['$scope', function($scope) {
+        app.directive('pieChart', function ($timeout) {
+            return {
+                restrict: 'EA',
+                scope: {
+                    data: '=data'
+                },
+                link: function ($scope, $elm, $attr) {
+
+                    // Create the data table and instantiate the chart
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Label');
+                    data.addColumn('number', 'Value');
+                    var chart = new google.visualization.PieChart($elm[0]);
+
+                    draw();
+
+                    // Watches, to refresh the chart when its data, title or dimensions change
+                    $scope.$watch('data', function () {
+                        draw();
+                    }, true); // true is for deep object equality checking
+
+
+                    function draw() {
+                        if (!draw.triggered) {
+                            draw.triggered = true;
+                            $timeout(function () {
+                                draw.triggered = false;
+                                var label, value;
+                                data.removeRows(0, data.getNumberOfRows());
+                                angular.forEach($scope.data, function (row) {
+                                    label = row[0];
+                                    value = parseFloat(row[1], 10);
+                                    if (!isNaN(value)) {
+                                        data.addRow([row[0], value]);
+                                    }
+                                });
+                                chart.draw(data);
+                            }, 0, true);
+                        }
+                    }
+                }
+            };
+        })
+
+        .controller('MsgCtrl', ['$scope', function($scope) {
           $scope.project = {};
           $scope.project.name = "Issue Viewer";
-          
+          $scope.chartData = [
+                ['Olive', 43],
+                ['Carine', 34],
+                ['Léna', 25],
+                ['Enzo', 12]
+            ];
           $scope.users = [
             {id:1, name:'Olive'},
             {id:2, name:'Carine'},
@@ -42,6 +93,17 @@
 
         }]);
     </script>
+    <style type="text/css">
+        
+        .lien {
+            font-weight: bold;
+        }
+        .lien:hover {
+            color: red;
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 <body ng-app="app"> 
 
@@ -51,8 +113,9 @@
             <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 text-center">
                 <h2>Contributors list</h2>
                 <ul class="list-group">
-                    <li ng-repeat="u in users" class="list-group-item">{{u.name}}</li>
+                    <li ng-repeat="u in users" class="list-group-item lien">{{u.name}}</li>
                 </ul>
+                <pie-chart data="chartData" title="Qui est le plus bavard?" width="500" height="320"></pie-chart>
             </div>
             <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 text-center">
                 <h2>Messages</h2>
