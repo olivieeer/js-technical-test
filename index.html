@@ -220,12 +220,14 @@ app.directive('pieChart', function ($timeout) {
                 <ul class="list-group">
                     <li ng-repeat="m in conversation" class="list-group-item border">
                         <panel ng-hide="(users[m.authorId-1].isChecked == true)">
-                            <panel-title>{{m.authorName}}
-                            </panel-title>
-                            <panel-body>
-                                <img src="{{m.img}}" class="img-circle img-responsive avatar inline" alt=""/>
-                                {{m.text}}
-                            </panel-body>
+                             <div class = "panel-heading">
+                                <panel-title>{{m.authorName}}
+                                </panel-title>
+                              </div>  
+                                <panel-body>
+                                    <img src="{{m.img}}" class="img-circle img-responsive avatar inline" alt=""/>
+                                    {{m.text}}
+                                </panel-body>
                         </panel>
                     </li>
                 </ul>
