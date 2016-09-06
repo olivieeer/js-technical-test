@@ -68,7 +68,7 @@ app.directive('pieChart', function ($timeout) {
             var chart = new google.visualization.PieChart($elm[0]);
             draw();
             // Watches, to refresh the chart when its data, title or dimensions change
-            $scope.$watch('data', function () {
+            $scope.$watch('chartData', function () {
                 draw();
             }, true); // true is for deep object equality checking
             function draw() {
@@ -92,7 +92,7 @@ app.directive('pieChart', function ($timeout) {
         }
     };
 }).controller('MsgCtrl', ['$scope', function ($scope) {
-    $scope.chartData = [
+    $scope.data = [
         ['Indutny', 43],
         ['ChALkeR', 34],
         ['kzc', 25]
@@ -111,7 +111,7 @@ app.directive('pieChart', function ($timeout) {
     
      $scope.addMsg = function() {
           if($scope.message.text !== '' && ($scope.message.username !== '')){
-            var n = $scope.conversation.size + 1;
+            var n = $scope.conversation.length + 1;
               $scope.conversation.push(
                 { 
                     messageId: n,
@@ -123,7 +123,6 @@ app.directive('pieChart', function ($timeout) {
               $scope.message.text = '';
               $scope.message.username = '';
           }
-          n = 0;
           $scope.show = false;
       }
     $scope.conversation = [
@@ -233,7 +232,7 @@ app.directive('pieChart', function ($timeout) {
                     </ul>
                 
                 <div class="col-md-offset-3 col-sm-offset-3 col-xs-offset-3">
-                  <pie-chart data="chartData" title="Qui est le plus bavard?" width="600" height="420"></pie-chart>
+                  <pie-chart data="data" title="Qui est le plus bavard?" width="600" height="420"></pie-chart>
                 </div>
 
             </div>
@@ -247,9 +246,9 @@ app.directive('pieChart', function ($timeout) {
                                 <panel-title>{{m.authorName}} commented on {{m.date}}
                                 </panel-title>
                               </div>  
-                                <panel-body>
+                                <panel-body class="blockquote">
                                     <img src="{{m.img}}" class="img-circle img-responsive avatar inline" alt=""/>
-                                    {{m.text}}
+                                    <blockquote>{{m.text}}</blockquote>
                                 </panel-body>
                         </panel>
                     </li>
