@@ -23,193 +23,198 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
- <style>
-     
-     .avatar {
-    height: 100px;
-    width: 100px;
-    }
-    .username {
-        font-weight: bold;
-        font-family: Tahoma, Verdana, Segoe, sans-serif;
-        font-size: 16px;
-    }
-    .username:hover {
-        color: red;
-        cursor: pointer;
-    }
-    .inline {
-        display: inline-block;
-    }
-    .chart {
-        width: 300px;
-        height: 300px;
-    }
-    [class*="col-"], footer {
-        /*background-color: #E2BC74;
-        border: 2px solid black;
-        border-radius: 2px;*/
-        line-height: 40px;
-    }
- </style>
- <script>
-var app = angular.module('app', []);
-app.directive('pieChart', function ($timeout) {
-    return {
-        restrict: 'EA',
-        scope: {
-            data: '=data'
-        },
-        link: function ($scope, $elm, $attr) {
-            // Create the data table and instantiate the chart
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Label');
-            data.addColumn('number', 'Value');
-            var chart = new google.visualization.PieChart($elm[0]);
-            draw();
-            // Watches, to refresh the chart when its data, title or dimensions change
-            $scope.$watch('chartData', function () {
-                draw();
-            }, true); // true is for deep object equality checking
-            function draw() {
-                if (!draw.triggered) {
-                    draw.triggered = true;
-                    $timeout(function () {
-                        draw.triggered = false;
-                        var label, value;
-                        data.removeRows(0, data.getNumberOfRows());
-                        angular.forEach($scope.data, function (row) {
-                            label = row[0];
-                            value = parseFloat(row[1], 10);
-                            if (!isNaN(value)) {
-                                data.addRow([row[0], value]);
-                            }
-                        });
-                        chart.draw(data);
-                    }, 0, true);
+    <style>
+        .avatar {
+            height: 100px;
+            width: 100px;
+        }
+
+        .username {
+            font-weight: bold;
+            font-family: Tahoma, Verdana, Segoe, sans-serif;
+            font-size: 16px;
+        }
+
+        .username:hover {
+            color: red;
+            cursor: pointer;
+        }
+
+        .inline {
+            display: inline-block;
+        }
+
+        .chart {
+            width: 300px;
+            height: 300px;
+        }
+
+        [class*="col-"], footer {
+            /*background-color: #E2BC74;
+            border: 2px solid black;
+            border-radius: 2px;*/
+            line-height: 40px;
+        }
+    </style>
+    <script>
+        var app = angular.module('app', []);
+        app.directive('pieChart', function ($timeout) {
+            return {
+                restrict: 'EA',
+                scope: {
+                    data: '=data'
+                },
+                link: function ($scope, $elm, $attr) {
+                    // Create the data table and instantiate the chart
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Label');
+                    data.addColumn('number', 'Value');
+                    var chart = new google.visualization.PieChart($elm[0]);
+                    draw();
+                    // Watches, to refresh the chart when its data, title or dimensions change
+                    $scope.$watch('chartData', function () {
+                        draw();
+                    }, true); // true is for deep object equality checking
+                    function draw() {
+                        if (!draw.triggered) {
+                            draw.triggered = true;
+                            $timeout(function () {
+                                draw.triggered = false;
+                                var label, value;
+                                data.removeRows(0, data.getNumberOfRows());
+                                angular.forEach($scope.data, function (row) {
+                                    label = row[0];
+                                    value = parseFloat(row[1], 10);
+                                    if (!isNaN(value)) {
+                                        data.addRow([row[0], value]);
+                                    }
+                                });
+                                chart.draw(data);
+                            }, 0, true);
+                        }
+                    }
                 }
+            };
+        }).controller('MsgCtrl', ['$scope', function ($scope) {
+            $scope.data = [
+                ['Indutny', 43],
+                ['ChALkeR', 34],
+                ['kzc', 25]
+            ];
+            $scope.users = [
+                {id: 1, name: 'Indutny', isChecked: false},
+                {id: 2, name: 'ChALkeR', isChecked: false},
+                {id: 3, name: 'kzc', isChecked: false}
+            ];
+
+            $scope.show = false;
+
+            $scope.toggle = function () {
+                $scope.show = true;
             }
-        }
-    };
-}).controller('MsgCtrl', ['$scope', function ($scope) {
-    $scope.data = [
-        ['Indutny', 43],
-        ['ChALkeR', 34],
-        ['kzc', 25]
-    ];
-    $scope.users = [
-        {id: 1, name: 'Indutny', isChecked: false},
-        {id: 2, name: 'ChALkeR', isChecked: false},
-        {id: 3, name: 'kzc', isChecked: false}
-    ];
 
-    $scope.show = false;
-
-    $scope.toggle = function() {
-        $scope.show = true;
-    }
-    
-     $scope.addMsg = function() {
-          if($scope.message.text !== '' && ($scope.message.username !== '')){
-            var n = $scope.conversation.length + 1;
-              $scope.conversation.push(
-                { 
-                    messageId: n,
-                    text:$scope.message.text, 
-                    img: 'images/myAvatar5.png',
-                    date: '6 Sept',
-                    wordCount: 30,
-                    authorName:$scope.message.username});
-              $scope.message.text = '';
-              $scope.message.username = '';
-          }
-          $scope.show = false;
-      }
-    $scope.conversation = [
-        {
-            messageId: 1,
-            text: 'This looks close to #6456 and I thought it was just another case of that issue but @indutny mentioned that the errors are printed from others languages so #6456 alone shouldnt have caused this this is why I m opening a separate issue.',
-            img: 'images/myAvatar.png',
-            wordCount: 43,
-            authorId: 1,
-            authorName: 'Indutny',
-            date: '18 May'
-        },
-        {
-            messageId: 2,
-            text: 'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?',
-            img: 'images/myAvatar2.png',
-            wordCount: 34,
-            authorId: 2,
-            authorName: 'ChALkeR',
-            date: '18 May'
-        },
-        {
-            messageId: 3,
-            text: 'That happens because of libc buffer size limit. In fact vfprintf returns -1.',
-            img: 'images/myAvatar4.png',
-            wordCount: 13,
-            authorId: 3,
-            authorName: 'kzc',
-            date: '18 May'
-        },
-        {
-            messageId: 4,
-            text: 'This looks close to #6456 and I thought it was just another case of that issue but @indutny mentioned that the errors are printed from others languages so #6456 alone shouldnt have caused this this is why I m opening a separate issue.',
-            img: 'images/myAvatar.png',
-            wordCount: 43,
-            authorId: 1,
-            authorName: 'Indutny',
-            date: '18 May'
-        },
-        {
-            messageId: 5,
-            text: 'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?',
-            img: 'images/myAvatar2.png',
-            wordCount: 34,
-            authorId: 2,
-            authorName: 'ChALkeR',
-            date: '18 May'
-        },
-        {
-            messageId: 6,
-            text: 'That happens because of libc buffer size limit. In fact vfprintf returns -1.',
-            img: 'images/myAvatar4.png',
-            wordCount: 13,
-            authorId: 3,
-            authorName: 'kzc',
-            date: '18 May'
-        },
-        {
-            messageId: 7,
-            text: 'This looks close to #6456 and I thought it was just another case of that issue but @indutny mentioned that the errors are printed from others languages so #6456 alone shouldnt have caused this this is why I m opening a separate issue.',
-            img: 'images/myAvatar.png',
-            wordCount: 43,
-            authorId: 1,
-            authorName: 'Indutny',
-            date: '18 May'
-        },
-        {
-            messageId: 8,
-            text: 'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?',
-            img: 'images/myAvatar2.png',
-            wordCount: 34,
-            authorId: 2,
-            authorName: 'ChALkeR',
-            date: '18 May'
-        },
-        {
-            messageId: 9,
-            text: 'That happens because of libc buffer size limit. In fact vfprintf returns -1.',
-            img: 'images/myAvatar4.png',
-            wordCount: 13,
-            authorId: 3,
-            authorName: 'kzc',
-            date: '18 May'
-        }
-    ];
-}]);
- </script>
+            $scope.addMsg = function () {
+                if ($scope.message.text !== '' && ($scope.message.username !== '')) {
+                    var n = $scope.conversation.length + 1;
+                    $scope.conversation.push(
+                            {
+                                messageId: n,
+                                text: $scope.message.text,
+                                img: 'images/myAvatar5.png',
+                                date: '6 Sept',
+                                wordCount: 30,
+                                authorName: $scope.message.username
+                            });
+                    $scope.message.text = '';
+                    $scope.message.username = '';
+                }
+                $scope.show = false;
+            }
+            $scope.conversation = [
+                {
+                    messageId: 1,
+                    text: 'This looks close to #6456 and I thought it was just another case of that issue but @indutny mentioned that the errors are printed from others languages so #6456 alone shouldnt have caused this this is why I m opening a separate issue.',
+                    img: 'images/myAvatar.png',
+                    wordCount: 43,
+                    authorId: 1,
+                    authorName: 'Indutny',
+                    date: '18 May'
+                },
+                {
+                    messageId: 2,
+                    text: 'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?',
+                    img: 'images/myAvatar2.png',
+                    wordCount: 34,
+                    authorId: 2,
+                    authorName: 'ChALkeR',
+                    date: '18 May'
+                },
+                {
+                    messageId: 3,
+                    text: 'That happens because of libc buffer size limit. In fact vfprintf returns -1.',
+                    img: 'images/myAvatar4.png',
+                    wordCount: 13,
+                    authorId: 3,
+                    authorName: 'kzc',
+                    date: '18 May'
+                },
+                {
+                    messageId: 4,
+                    text: 'This looks close to #6456 and I thought it was just another case of that issue but @indutny mentioned that the errors are printed from others languages so #6456 alone shouldnt have caused this this is why I m opening a separate issue.',
+                    img: 'images/myAvatar.png',
+                    wordCount: 43,
+                    authorId: 1,
+                    authorName: 'Indutny',
+                    date: '18 May'
+                },
+                {
+                    messageId: 5,
+                    text: 'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?',
+                    img: 'images/myAvatar2.png',
+                    wordCount: 34,
+                    authorId: 2,
+                    authorName: 'ChALkeR',
+                    date: '18 May'
+                },
+                {
+                    messageId: 6,
+                    text: 'That happens because of libc buffer size limit. In fact vfprintf returns -1.',
+                    img: 'images/myAvatar4.png',
+                    wordCount: 13,
+                    authorId: 3,
+                    authorName: 'kzc',
+                    date: '18 May'
+                },
+                {
+                    messageId: 7,
+                    text: 'This looks close to #6456 and I thought it was just another case of that issue but @indutny mentioned that the errors are printed from others languages so #6456 alone shouldnt have caused this this is why I m opening a separate issue.',
+                    img: 'images/myAvatar.png',
+                    wordCount: 43,
+                    authorId: 1,
+                    authorName: 'Indutny',
+                    date: '18 May'
+                },
+                {
+                    messageId: 8,
+                    text: 'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?',
+                    img: 'images/myAvatar2.png',
+                    wordCount: 34,
+                    authorId: 2,
+                    authorName: 'ChALkeR',
+                    date: '18 May'
+                },
+                {
+                    messageId: 9,
+                    text: 'That happens because of libc buffer size limit. In fact vfprintf returns -1.',
+                    img: 'images/myAvatar4.png',
+                    wordCount: 13,
+                    authorId: 3,
+                    authorName: 'kzc',
+                    date: '18 May'
+                }
+            ];
+        }]);
+    </script>
 </head>
 <body ng-app="app">
 
@@ -221,18 +226,18 @@ app.directive('pieChart', function ($timeout) {
 
             <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 text-center">
                 <h2>Contributors</h2>
-                
-                    <ul class="list-group">
-                        <li ng-repeat="u in users" class="list-group-item">
-                           <div class="form-group">
+
+                <ul class="list-group">
+                    <li ng-repeat="u in users" class="list-group-item">
+                        <div class="form-group">
                             <input type="checkbox" ng-model="u.isChecked">&nbsp;
-                                <span class="username">{{u.name}}</span>
-                          </div> 
-                        </li>
-                    </ul>
-                
+                            <span class="username">{{u.name}}</span>
+                        </div>
+                    </li>
+                </ul>
+
                 <div class="col-md-offset-3 col-sm-offset-3 col-xs-offset-3">
-                  <pie-chart data="data" title="Qui est le plus bavard?" width="600" height="420"></pie-chart>
+                    <pie-chart data="data" title="Qui est le plus bavard?" width="600" height="420"></pie-chart>
                 </div>
 
             </div>
@@ -242,14 +247,15 @@ app.directive('pieChart', function ($timeout) {
                 <ul class="list-group">
                     <li ng-repeat="m in conversation" class="list-group-item border">
                         <panel ng-hide="(users[m.authorId-1].isChecked == true)">
-                             <div class = "panel-heading">
-                                <panel-title>{{m.authorName}} commented on {{m.date}}
+                            <div class="panel-heading">
+                                <panel-title><img src="{{m.img}}" class="img-circle img-responsive avatar inline"
+                                                  alt=""/>&nbsp;&nbsp; {{m.authorName}} commented on {{m.date}}
                                 </panel-title>
-                              </div>  
-                                <panel-body class="blockquote">
-                                    <img src="{{m.img}}" class="img-circle img-responsive avatar inline" alt=""/>
-                                    <blockquote>{{m.text}}</blockquote>
-                                </panel-body>
+                            </div>
+                            <panel-body>
+                                <blockquote class="inline">{{m.text}}</blockquote>
+
+                            </panel-body>
                         </panel>
                     </li>
                 </ul>
@@ -259,29 +265,32 @@ app.directive('pieChart', function ($timeout) {
             <div class="row" ng-show="show === true">
                 <form class="col-md-offset-6 col-xs-offset-6 col-sm-offset-6 form-horizontal col-md-6 col-lg-6 col-sm-6 col-xs-6">
                     <fieldset>
-                    <!-- Text input-->
-                    <div class="form-group">
-                      <div class="col-md-offset-2 col-md-4 col-sm-offset-2 col-sm-4 col-xs-offset-2 col-xs-4">
-                      <input id="textinput" ng-model="message.username" type="text" placeholder="Entrez votre username" class="form-control input-md">
-                      </div>
-                    </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-4 col-sm-offset-2 col-sm-4 col-xs-offset-2 col-xs-4">
+                                <input id="textinput" ng-model="message.username" type="text"
+                                       placeholder="Entrez votre username" class="form-control input-md">
+                            </div>
+                        </div>
 
-                    <!-- Textarea -->
-                    <div class="form-group">
-                      <div class="col-md-offset-2 col-md-8 col-xs-8">                     
-                        <textarea class="form-control" ng-model="message.text" name="textarea">Reply</textarea>
-                      </div>
-                    </div>
+                        <!-- Textarea -->
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8 col-xs-8">
+                                <textarea class="form-control" ng-model="message.text" name="textarea">Reply</textarea>
+                            </div>
+                        </div>
 
-                    <!-- Button -->
-                    <div class="form-group">
-                      <div class="col-md-offset-4 col-md-4 col-xs-offset-4 col-xs-4">
-                        <button id="singlebutton" class="btn btn-success" name="singlebutton" class="btn btn-primary" ng-click="addMsg()">Reply</button>
-                      </div>
-                    </div>
+                        <!-- Button -->
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-4 col-xs-offset-4 col-xs-4">
+                                <button id="singlebutton" class="btn btn-success" name="singlebutton"
+                                        class="btn btn-primary" ng-click="addMsg()">Reply
+                                </button>
+                            </div>
+                        </div>
 
                     </fieldset>
-                    </form>
+                </form>
 
             </div>
 
