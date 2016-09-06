@@ -28,29 +28,29 @@
      .avatar {
     height: 100px;
     width: 100px;
-}
-.username {
-    font-weight: bold;
-    font-family: Tahoma, Verdana, Segoe, sans-serif;
-    font-size: 16px;
-}
-.username:hover {
-    color: red;
-    cursor: pointer;
-}
-.inline {
-    display: inline-block;
-}
-.chart {
-    width: 300px;
-    height: 300px;
-}
-[class*="col-"], footer {
-    /*background-color: #E2BC74;
-    border: 2px solid black;
-    border-radius: 2px;*/
-    line-height: 40px;
-}
+    }
+    .username {
+        font-weight: bold;
+        font-family: Tahoma, Verdana, Segoe, sans-serif;
+        font-size: 16px;
+    }
+    .username:hover {
+        color: red;
+        cursor: pointer;
+    }
+    .inline {
+        display: inline-block;
+    }
+    .chart {
+        width: 300px;
+        height: 300px;
+    }
+    [class*="col-"], footer {
+        /*background-color: #E2BC74;
+        border: 2px solid black;
+        border-radius: 2px;*/
+        line-height: 40px;
+    }
  </style>
  <script>
 var app = angular.module('app', []);
@@ -110,11 +110,21 @@ app.directive('pieChart', function ($timeout) {
     }
     
      $scope.addMsg = function() {
-          if(event.keyCode == 13 && $scope.message.text){
-              $scope.conversation.push({text:$scope.message.text, authorName:$scope.message.username});
+          if($scope.message.text !== '' && ($scope.message.username !== '')){
+            var n = $scope.conversation.size + 1;
+              $scope.conversation.push(
+                { 
+                    messageId: n,
+                    text:$scope.message.text, 
+                    img: 'images/myAvatar5.png',
+                    date: '6 Sept',
+                    wordCount: 30,
+                    authorName:$scope.message.username});
               $scope.message.text = '';
               $scope.message.username = '';
           }
+          n = 0;
+          $scope.show = false;
       }
     $scope.conversation = [
         {
@@ -212,12 +222,16 @@ app.directive('pieChart', function ($timeout) {
 
             <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 text-center">
                 <h2>Contributors</h2>
-                <ul class="list-group">
-                    <li ng-repeat="u in users" class="list-group-item"><input type="checkbox" ng-model="u.isChecked">&nbsp;
-                        <span class="username">{{u.name}}</span>
-                    </li>
-                </ul>
-
+                
+                    <ul class="list-group">
+                        <li ng-repeat="u in users" class="list-group-item">
+                           <div class="form-group">
+                            <input type="checkbox" ng-model="u.isChecked">&nbsp;
+                                <span class="username">{{u.name}}</span>
+                          </div> 
+                        </li>
+                    </ul>
+                
                 <div class="col-md-offset-3 col-sm-offset-3 col-xs-offset-3">
                   <pie-chart data="chartData" title="Qui est le plus bavard?" width="600" height="420"></pie-chart>
                 </div>
