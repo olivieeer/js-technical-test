@@ -123,7 +123,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar.png',
             wordCount: 43,
             authorId: 1,
-            authorName: 'Indutny'
+            authorName: 'Indutny',
+            date: '18 May'
         },
         {
             messageId: 2,
@@ -131,7 +132,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar2.png',
             wordCount: 34,
             authorId: 2,
-            authorName: 'ChALkeR'
+            authorName: 'ChALkeR',
+            date: '18 May'
         },
         {
             messageId: 3,
@@ -139,7 +141,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar4.png',
             wordCount: 13,
             authorId: 3,
-            authorName: 'kzc'
+            authorName: 'kzc',
+            date: '18 May'
         },
         {
             messageId: 4,
@@ -147,7 +150,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar.png',
             wordCount: 43,
             authorId: 1,
-            authorName: 'Indutny'
+            authorName: 'Indutny',
+            date: '18 May'
         },
         {
             messageId: 5,
@@ -155,7 +159,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar2.png',
             wordCount: 34,
             authorId: 2,
-            authorName: 'ChALkeR'
+            authorName: 'ChALkeR',
+            date: '18 May'
         },
         {
             messageId: 6,
@@ -163,7 +168,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar4.png',
             wordCount: 13,
             authorId: 3,
-            authorName: 'kzc'
+            authorName: 'kzc',
+            date: '18 May'
         },
         {
             messageId: 7,
@@ -171,7 +177,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar.png',
             wordCount: 43,
             authorId: 1,
-            authorName: 'Indutny'
+            authorName: 'Indutny',
+            date: '18 May'
         },
         {
             messageId: 8,
@@ -179,7 +186,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar2.png',
             wordCount: 34,
             authorId: 2,
-            authorName: 'ChALkeR'
+            authorName: 'ChALkeR',
+            date: '18 May'
         },
         {
             messageId: 9,
@@ -187,7 +195,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar4.png',
             wordCount: 13,
             authorId: 3,
-            authorName: 'kzc'
+            authorName: 'kzc',
+            date: '18 May'
         }
     ];
 }]);
@@ -221,7 +230,7 @@ app.directive('pieChart', function ($timeout) {
                     <li ng-repeat="m in conversation" class="list-group-item border">
                         <panel ng-hide="(users[m.authorId-1].isChecked == true)">
                              <div class = "panel-heading">
-                                <panel-title>{{m.authorName}}
+                                <panel-title>{{m.authorName}} commented on {{m.date}}
                                 </panel-title>
                               </div>  
                                 <panel-body>
@@ -275,7 +284,7 @@ app.directive('pieChart', function ($timeout) {
 </div>
 <!-- /.container -->
 
-<script type="text/javascript" src="scripts/main.js"></script>
+<!-- <script type="text/javascript" src="scripts/main.js"></script> -->
 <!-- jQuery Version 1.11.1 -->
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
 

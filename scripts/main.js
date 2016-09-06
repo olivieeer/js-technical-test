@@ -68,7 +68,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar.png',
             wordCount: 43,
             authorId: 1,
-            authorName: 'Indutny'
+            authorName: 'Indutny',
+            date: '18 May'
         },
         {
             messageId: 2,
@@ -76,7 +77,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar2.png',
             wordCount: 34,
             authorId: 2,
-            authorName: 'ChALkeR'
+            authorName: 'ChALkeR',
+            date: '18 May'
         },
         {
             messageId: 3,
@@ -84,7 +86,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar4.png',
             wordCount: 13,
             authorId: 3,
-            authorName: 'kzc'
+            authorName: 'kzc',
+            date: '18 May'
         },
         {
             messageId: 4,
@@ -92,7 +95,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar.png',
             wordCount: 43,
             authorId: 1,
-            authorName: 'Indutny'
+            authorName: 'Indutny',
+            date: '18 May'
         },
         {
             messageId: 5,
@@ -100,7 +104,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar2.png',
             wordCount: 34,
             authorId: 2,
-            authorName: 'ChALkeR'
+            authorName: 'ChALkeR',
+            date: '18 May'
         },
         {
             messageId: 6,
@@ -108,7 +113,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar4.png',
             wordCount: 13,
             authorId: 3,
-            authorName: 'kzc'
+            authorName: 'kzc',
+            date: '18 May'
         },
         {
             messageId: 7,
@@ -116,7 +122,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar.png',
             wordCount: 43,
             authorId: 1,
-            authorName: 'Indutny'
+            authorName: 'Indutny',
+            date: '18 May'
         },
         {
             messageId: 8,
@@ -124,7 +131,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar2.png',
             wordCount: 34,
             authorId: 2,
-            authorName: 'ChALkeR'
+            authorName: 'ChALkeR',
+            date: '18 May'
         },
         {
             messageId: 9,
@@ -132,7 +140,8 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar4.png',
             wordCount: 13,
             authorId: 3,
-            authorName: 'kzc'
+            authorName: 'kzc',
+            date: '18 May'
         }
     ];
 }]);
