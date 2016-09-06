@@ -1,1 +1,35 @@
-a
+
+
+.avatar {
+    height: 100px;
+    width: 100px;
+}
+
+.username {
+    font-weight: bold;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    font-size: 16px;
+}
+
+.username:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.chart {
+    width: 300px;
+    height: 300px;
+}
+
+[class*="col-"], footer {
+    /*background-color: #E2BC74;
+    border: 2px solid black;
+    border-radius: 2px;*/
+    line-height: 40px;
+}
+
+
