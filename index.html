@@ -29,27 +29,22 @@
     height: 100px;
     width: 100px;
 }
-
 .username {
     font-weight: bold;
     font-family: Tahoma, Verdana, Segoe, sans-serif;
     font-size: 16px;
 }
-
 .username:hover {
     color: red;
     cursor: pointer;
 }
-
 .inline {
     display: inline-block;
 }
-
 .chart {
     width: 300px;
     height: 300px;
 }
-
 [class*="col-"], footer {
     /*background-color: #E2BC74;
     border: 2px solid black;
@@ -58,9 +53,7 @@
 }
  </style>
  <script>
-
 var app = angular.module('app', []);
-
 app.directive('pieChart', function ($timeout) {
     return {
         restrict: 'EA',
@@ -68,21 +61,16 @@ app.directive('pieChart', function ($timeout) {
             data: '=data'
         },
         link: function ($scope, $elm, $attr) {
-
             // Create the data table and instantiate the chart
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Label');
             data.addColumn('number', 'Value');
             var chart = new google.visualization.PieChart($elm[0]);
-
             draw();
-
             // Watches, to refresh the chart when its data, title or dimensions change
             $scope.$watch('data', function () {
                 draw();
             }, true); // true is for deep object equality checking
-
-
             function draw() {
                 if (!draw.triggered) {
                     draw.triggered = true;
@@ -105,17 +93,14 @@ app.directive('pieChart', function ($timeout) {
     };
 }).controller('MsgCtrl', ['$scope', function ($scope) {
     $scope.chartData = [
-        ['Olive', 43],
-        ['Carine', 34],
-        ['Léna', 25],
-        ['Enzo', 12]
+        ['Indutny', 43],
+        ['ChALkeR', 34],
+        ['kzc', 25]
     ];
-
     $scope.users = [
-        {id: 1, name: 'Olive', isChecked: false},
-        {id: 2, name: 'Carine', isChecked: false},
-        {id: 3, name: 'Léna', isChecked: false},
-        {id: 3, name: 'Enzo', isChecked: false}
+        {id: 1, name: 'Indutny', isChecked: false},
+        {id: 2, name: 'ChALkeR', isChecked: false},
+        {id: 3, name: 'kzc', isChecked: false}
     ];
 
     $scope.show = false;
@@ -123,7 +108,7 @@ app.directive('pieChart', function ($timeout) {
     $scope.toggle = function() {
         $scope.show = true;
     }
-
+    
      $scope.addMsg = function() {
           if(event.keyCode == 13 && $scope.message.text){
               $scope.conversation.push({text:$scope.message.text, authorName:$scope.message.username});
@@ -131,7 +116,6 @@ app.directive('pieChart', function ($timeout) {
               $scope.message.username = '';
           }
       }
-
     $scope.conversation = [
         {
             messageId: 1,
@@ -139,21 +123,23 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar.png',
             wordCount: 43,
             authorId: 1,
-            authorName: 'Olive'
+            authorName: 'Indutny'
         },
         {
             messageId: 2,
             text: 'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?',
             img: 'images/myAvatar2.png',
             wordCount: 34,
-            authorId: 2
+            authorId: 2,
+            authorName: 'ChALkeR'
         },
         {
             messageId: 3,
             text: 'That happens because of libc buffer size limit. In fact vfprintf returns -1.',
             img: 'images/myAvatar4.png',
             wordCount: 13,
-            authorId: 3
+            authorId: 3,
+            authorName: 'kzc'
         },
         {
             messageId: 4,
@@ -161,21 +147,23 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar.png',
             wordCount: 43,
             authorId: 1,
-            authorName: 'Olive'
+            authorName: 'Indutny'
         },
         {
             messageId: 5,
             text: 'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?',
             img: 'images/myAvatar2.png',
             wordCount: 34,
-            authorId: 2
+            authorId: 2,
+            authorName: 'ChALkeR'
         },
         {
             messageId: 6,
             text: 'That happens because of libc buffer size limit. In fact vfprintf returns -1.',
             img: 'images/myAvatar4.png',
             wordCount: 13,
-            authorId: 3
+            authorId: 3,
+            authorName: 'kzc'
         },
         {
             messageId: 7,
@@ -183,24 +171,25 @@ app.directive('pieChart', function ($timeout) {
             img: 'images/myAvatar.png',
             wordCount: 43,
             authorId: 1,
-            authorName: 'Olive'
+            authorName: 'Indutny'
         },
         {
             messageId: 8,
             text: 'So you re experiencing a dropped data to console with normal exiting JS? i.e. without calling process.exit()? If so thats a different issue to #6456. On which platform are you experiencing this issue?',
             img: 'images/myAvatar2.png',
             wordCount: 34,
-            authorId: 2
+            authorId: 2,
+            authorName: 'ChALkeR'
         },
         {
             messageId: 9,
             text: 'That happens because of libc buffer size limit. In fact vfprintf returns -1.',
             img: 'images/myAvatar4.png',
             wordCount: 13,
-            authorId: 3
+            authorId: 3,
+            authorName: 'kzc'
         }
     ];
-
 }]);
  </script>
 </head>
@@ -231,7 +220,7 @@ app.directive('pieChart', function ($timeout) {
                 <ul class="list-group">
                     <li ng-repeat="m in conversation" class="list-group-item border">
                         <panel ng-hide="(users[m.authorId-1].isChecked == true)">
-                            <panel-title>
+                            <panel-title>{{m.authorName}}
                             </panel-title>
                             <panel-body>
                                 <img src="{{m.img}}" class="img-circle img-responsive avatar inline" alt=""/>
