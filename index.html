@@ -11,8 +11,9 @@
     <title>Issue Viewer</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.3.0/balloon.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/angularjs/1.5.5/angular.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">google.load('visualization', '1.0', {'packages': ['corechart']});</script>
@@ -56,6 +57,42 @@
             line-height: 40px;
         }
 
+        .tooltip{
+        display: inline;
+        position: relative;
+
+    width: 6000px;
+
+        }
+        .tooltip:hover:after{
+        background: #333;
+        background: rgba(0,0,0,.8);
+        border-radius: 5px;
+        bottom: 26px;
+        color: #fff;
+        content: attr(title);
+        left: 20%;
+        padding: 5px 15px;
+        position: absolute;
+        z-index: 98;
+        width: 600px;
+        }
+        .tooltip:hover:before{
+        border: solid;
+        border-color: #333 transparent;
+        border-width: 6px 6px 0 6px;
+        bottom: 20px;
+        content: «  »;
+        left: 50%;
+        position: absolute;
+        z-index: 99;
+        }
+        /*div {
+        border: solid;
+        border-color: #333 transparent;
+        border-width: 6px 6px 0 6px;
+        width: px;
+        }*/
         @media (max-width: 860px) {
             .username {
                 font-size: 12px;
@@ -66,6 +103,7 @@
             }
         }
     </style>
+
     <script>
         var app = angular.module('app', []);
         app.directive('pieChart', function ($timeout) {
@@ -233,10 +271,8 @@
     <div ng-controller="MsgCtrl">
 
         <div class="row">
-
             <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 text-center">
                 <h2>Contributors</h2>
-
                 <ul class="list-group">
                     <li ng-repeat="u in users" class="list-group-item">
                         <div class="form-group">
@@ -245,7 +281,6 @@
                         </div>
                     </li>
                 </ul>
-
                 <div class="col-md-offset-3 col-sm-offset-3 col-xs-offset-3">
                     <pie-chart data="data" title="Qui est le plus bavard?" width="600" height="420"></pie-chart>
                 </div>
@@ -263,7 +298,10 @@
                                 </panel-title>
                             </div>
                             <panel-body>
-                                <blockquote class="inline">{{m.text}}</blockquote>
+                          
+                              <p><code></code> <a href="#" class="tooltip-right" data-tooltip="{{m.text}}"></a></p>
+                            
+                               <!--  <blockquote class="inline">{{m.text}}</blockquote> -->
 
                             </panel-body>
                         </panel>
@@ -321,7 +359,7 @@
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
 
 </body>
 
